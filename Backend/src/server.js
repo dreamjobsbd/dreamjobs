@@ -5,6 +5,10 @@
 import express from "express";
 import morgan from "morgan";
 
+//files
+import ConnectDatabase from "./config/Database.js";
+
+//env
 import { serverPort } from "./hiddenEnv.js";
 
 
@@ -22,9 +26,12 @@ app.get("/", function (req, res) {
 });
 
 
-// Start the Express application listening
+
+
+//Start the Express application listening
 app.listen(serverPort, async function () {
     console.log(`server running at http://localhost:${serverPort}`);
+    await ConnectDatabase()
 });
 
 
