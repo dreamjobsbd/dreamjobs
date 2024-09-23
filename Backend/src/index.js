@@ -8,9 +8,14 @@ import morgan from "morgan";
 //files
 import ConnectDatabase from "./config/Database.js";
 
+//routes
+import userRoute from "./routes/userRoute.js";
+
 //env
 import { serverPort } from "./hiddenEnv.js";
+import bodyParser from "body-parser";
 
+import { ErrorResponse } from "./helpers/apiResponse.js";
 
 //create an express application;
 const app = express();
@@ -18,7 +23,11 @@ const app = express();
 
 //middlewares
 app.use(morgan("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
 
+//routes
+app.use("/user",userRoute);
 
 //home route
 app.get("/", function (req, res) {
