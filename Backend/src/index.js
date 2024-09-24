@@ -10,6 +10,7 @@ import ConnectDatabase from "./config/Database.js";
 
 //routes
 import userRoute from "./routes/userRoute.js";
+import jobRoute from "./routes/jobRoute.js";
 
 //env
 import { serverPort } from "./hiddenEnv.js";
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 //routes
 app.use("/user",userRoute);
+app.use("/job",jobRoute)
 
 //home route
 app.get("/", function (req, res) {
