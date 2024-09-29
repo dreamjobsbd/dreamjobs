@@ -4,6 +4,7 @@
 //packages
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 
 //files
 import ConnectDatabase from "./config/Database.js";
@@ -21,9 +22,14 @@ import { ErrorResponse } from "./helpers/apiResponse.js";
 //create an express application;
 const app = express();
 
+const corsOptions = {
+    origin : "http://localhost:5173",
+    credentials : true,
+ }
 
 //middlewares
 app.use(morgan("dev"));
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 
