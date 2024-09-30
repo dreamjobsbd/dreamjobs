@@ -67,9 +67,6 @@ export const ActivateUser = async (req, res, next) => {
 
      //get the token from request body
      const token = req.body.token;
-
-     //if token not provided the thow error
-     if (!token) throw httpError(404, "Token is not found");
  
      //verify token using the jwt private key
      const decode = jsonwebtoken.verify(token, jwtPrivatekey);
