@@ -11,6 +11,10 @@ import {
   GetCurrentUser,
 } from "../controllers/authController.js";
 
+//middlewares
+import { IsLoggedIn, IsLoggedOut } from "../middlewares/authMiddleware.js";
+
+
 //validation
 import {
   validateUserRegistration,
@@ -28,14 +32,16 @@ authRoute.post(
   UserRegistration
 );
 
+
+authRoute.post("/activate", validateActivateUser, RunValidation, ActivateUser);
+
+authRoute.post("/login", validateUserLogin, IsLoggedOut, RunValidation, UserLogin);
+
+authRoute.post("/logout", IsLoggedIn, UserLogout);
+
 authRoute.get("/refresh-token", HandleRefreshToken);
 
 authRoute.get("/current-user", GetCurrentUser);
-authRoute.post("/activate", validateActivateUser, RunValidation, ActivateUser);
-
-authRoute.post("/login", validateUserLogin, RunValidation, UserLogin);
-
-authRoute.post("/logout", UserLogout);
 
 
 export default authRoute;
