@@ -8,11 +8,14 @@ import jsonwebtoken from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 //env variables
-import { jwtPrivatekey, clientUrl } from "../hiddenEnv.js";
+import { jwtPrivatekey, clientUrl, jwtRefreshKey, jwtAccessKey } from "../hiddenEnv.js";
 
 //api response
 import { SuccessResponse, ErrorResponse } from "../helpers/apiResponse.js";
+
+//helper
 import ProcessEmail from "../helpers/processEmail.js";
+import { SetAccessTokenCookie, SetRefreshTokenCookie } from "../helpers/cookies.js";
 
 
 export const UserRegistration = async (req, res, next) => {
@@ -97,31 +100,159 @@ export const ActivateUser = async (req, res, next) => {
 
 
 export const UserLogin = async (req, res, next) => {
+
     try {
         const { email, password } = req.body;
-
-        // Check if user exists
-        const user = await User.findOne({ email });
-        if (!user) throw httpError(401, "Invalid email or password");
-
-
-        // Verify password
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) throw httpError(401, "Invalid email or password");
-
-
+    
+        //check the user is exist or not
+        const user = await User.findOne({email : email});
+    
+        //if user does not exist
+        if (!user) {
+          throw httpError(404, "user does not exist , please register");
+        }
+    
+        //check the given password match or not
+        const isPasswordMatch = await bcrypt.compare(password, user.password);
+    
+        //if password does not match throw error
+        if (!isPasswordMatch) {
+          throw httpError(401, "passowrd is wrong");
+        }
+    
+        //if user banned
+        if (user.isBanned) {
+          throw httpError(403, "you are banned , please contact to authority");
+        }
+    
+        //create a jwt refresh token
+        let options;
+        options = {expiresIn: "10d"}
+        const refreshToken = jsonwebtoken.sign({ user }, jwtRefreshKey, options);
+    
+        //set refresh token
+        SetRefreshTokenCookie(res, refreshToken);
+    
+        //create a jwt access key
+        options = {expiresIn: "15m"}
+        const accessToken = jsonwebtoken.sign({ user }, jwtAccessKey, options);
+    
+        //set accessToken to cookie
+        SetAccessTokenCookie(res, accessToken);
+    
+        //if all is well send success response
         return SuccessResponse(res, {
-            statusCode: 200,
-            message: "Login successful",
-            payload: {
-                userId: user._id,
-                fullName: user.fullName,
-                email: user.email,
-                phoneNumber : user.phoneNumber
-            }
+          statusCode: 200,
+          message: "user login succesfully",
         });
 
-    } catch (error) {
+      } catch (error) {
         next(error);
+      }
+
+};
+
+
+
+export const UserLogout = (req, res, next) => {
+    try {
+
+        //clear the refresh token cookie
+        res.clearCookie("refreshToken");
+        //clear the access token cookie
+        res.clearCookie("accessToken");
+    
+        //return successful response
+        return SuccessResponse(res, {
+          statusCode: 200,
+          message: "user logged out successfully",
+        });
+      } catch (error) {
+        next(error);
+      }
+}
+
+
+
+export const HandleRefreshToken = async (req, res, next) => {
+  
+    try {
+      
+        //get the refresh token from req cookie
+        const oldRefreshToken = req.cookies.refreshToken; 
+    
+        if (!oldRefreshToken) {
+          throw httpError(401, "no refres token found, please login");
+        }
+    
+        //verify the refresh token
+        let decodedToken;
+        try {
+          decodedToken = jsonwebtoken.verify(oldRefreshToken, jwtRefreshKey);
+        } catch (error) {
+          if (error instanceof jsonwebtoken.TokenExpiredError) {
+            throw httpError(401, "token is expired please login");
+          }
+          throw (401, "invalid refreshToken please login");
+        }
+    
+        //find user from decodedToken
+        const id = decodedToken.user._id;
+        const user = await User.findById(id);
+    
+        //create a jwt access key
+        const options = {expiresIn : "15m"}
+        const accessToken = jsonwebtoken.sign({ user }, jwtAccessKey, options);
+    
+        //set accessToken to cookie
+        SetAccessTokenCookie(res, accessToken);
+    
+        return SuccessResponse(res, {
+          statusCode: 200,
+          message: "new access token generated",
+        });
+      } catch (error) {
+        next(error);
+      }
+};
+
+
+export const GetCurrentUser = async (req, res, next) => {
+  try {
+    // Get the access token from req cookies
+    const accessToken = req.cookies.accessToken;
+
+    // If there's no access token, throw an error
+    if (!accessToken) {
+      throw httpError(401, "No access token found, please login");
     }
+
+    // Verify the access token
+    const decodedToken = jsonwebtoken.verify(accessToken, jwtAccessKey);
+
+    // If decodedToken is empty throw an error
+    if (!decodedToken) {
+      throw httpError(401, "Invalid Access Token, please login again");
+    }
+
+    // Get the user ID from the decoded token
+    const userId = decodedToken.user._id;
+
+    // Find the user and remove password 
+    const user = await User.findById(userId).select("-password");
+
+    // If user not found, throw an error
+    if (!user) {
+      throw httpError(404, "User not found");
+    }
+
+    // Return the user data
+    return SuccessResponse(res, {
+      statusCode: 200,
+      message: "User data retrieved successfully",
+      payload: { user },
+    });
+  } catch (error) {
+    next(error);
+  }
 };

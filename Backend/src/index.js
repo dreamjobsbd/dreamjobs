@@ -5,6 +5,8 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import httpError from "http-errors"
+import cookie from "cookie-parser";
 
 //files
 import ConnectDatabase from "./config/Database.js";
@@ -33,6 +35,7 @@ app.use(morgan("dev"));
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
+app.use(cookie());
 
 //routes
 app.use("/user",userRoute);
@@ -46,7 +49,7 @@ app.get("/", function (req, res) {
 
 //client side error
 app.use(function (req, res, next) {
-    next(createHttpError(404, "route not found"))
+    next(httpError(404, "route not found"))
 })
 
 //server side error -> all error store on this

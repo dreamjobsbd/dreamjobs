@@ -16,3 +16,7 @@ export const smtpUsername = process.env.smtpUsername;
 
 export const smtpPassword = process.env.smtpPassword;
 
+export const jwtRefreshKey = process.env.jwtRefreshKey;
+
+export const jwtAccessKey = process.env.jwtAccessKey;
+
