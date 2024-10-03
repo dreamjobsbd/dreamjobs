@@ -1,11 +1,9 @@
 
 export interface User {
     _id: string,
-    name: string,
+    fullName: string,
     email: string,
-    phone: number,
-    image: string,
-    address: string,
+    phoneNumber: number,
     isAdmin: boolean,
     isBanned: boolean
 }

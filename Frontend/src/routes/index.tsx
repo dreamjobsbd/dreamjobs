@@ -6,6 +6,8 @@ import Root from "../Root";
 import Home from "../pages/Home";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import Dashboard from "../pages/auth/Dashboard"
+import ActivateUser from "../pages/auth/ActivateUser"
 
 
 const routes : RouteObject[] = [
@@ -25,6 +27,14 @@ const routes : RouteObject[] = [
           path: "/register",
           element: <Register />,
         },
+        {
+          path : "/dashboard",
+          element : <Dashboard />
+        },
+        {
+          path : "user/activate/:token",
+          element : <ActivateUser />
+        }
       ],
     },
   ];
