@@ -9,11 +9,12 @@ import {
 //validation
 import { validateJobPost } from "../validation/jobValidation.js";
 import RunValidation from "../validation/index.js";
+import {IsLoggedIn, IsAdmin} from "../middlewares/authMiddleware.js"
 
 
 const jobRoute = express.Router();
 
-jobRoute.post("/post-job",validateJobPost, RunValidation, CreateJobPost);
+jobRoute.post("/post-job",validateJobPost, RunValidation, IsLoggedIn, IsAdmin, CreateJobPost);
 jobRoute.get("/all-job", GetJobPosts);
 jobRoute.get("/:id", GetSingleJobPostById);
 

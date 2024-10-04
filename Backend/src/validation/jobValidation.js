@@ -21,7 +21,7 @@ export const validateJobPost = [
     body("responsibilities")
         .trim()
         .notEmpty()
-        .withMessage("please provide responsibilities"),
+        .withMessage("please provide Responsibilities"),
         
     body("skills")
         .trim()
@@ -34,7 +34,7 @@ export const validateJobPost = [
         .notEmpty()
         .withMessage("please provide education"),
     
-    body("expereince")
+    body("experience")
         .trim()
         .notEmpty()
         .withMessage("please provide a expereince"),

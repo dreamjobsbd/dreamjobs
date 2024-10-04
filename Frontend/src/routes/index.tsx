@@ -8,7 +8,7 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Dashboard from "../pages/auth/Dashboard"
 import ActivateUser from "../pages/auth/ActivateUser"
-
+import PostJob from "../pages/Jobs/PostJob"
 
 const routes : RouteObject[] = [
     {
@@ -34,7 +34,12 @@ const routes : RouteObject[] = [
         {
           path : "user/activate/:token",
           element : <ActivateUser />
+        },
+        {
+          path : "/post-job",
+          element : <PostJob />
         }
+        
       ],
     },
   ];

@@ -1,50 +1,68 @@
+import { model, Schema } from "mongoose";
 
-import {model, Schema} from "mongoose";
-
-const jobPostSchema = new Schema({
-    
-    companyName : {
-        type : String,
+const jobPostSchema = new Schema(
+  {
+    companyName: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    jobTitle : {
-        type : String,
+    jobTitle: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    jobDescription : {
-        type : String,
+    jobDescription: {
+      type: String,
+      trim: true,
     },
 
-    Responsibilities : {
-        type : String,
+    responsibilities: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    Skills : {
-     type : String,
+    skills: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    Education : {
-        type : String,
+    education: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    Expereince : {
-        type : String,
-    },
-    
-    Salary : {
-        type : String,
+    experience: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
-    employmentStatus : {
-        type : String,
+    salary: {
+      type: String,
+      trim: true,
+      required: true,
     },
-    
-    applicationProcess : {
-        type : String,
-    }
-    
-},{timestamps : true});
 
+    employmentStatus: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+
+    applicationProcess: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
 const JobPost = model("JobPost", jobPostSchema);
 
