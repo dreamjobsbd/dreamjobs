@@ -1,9 +1,11 @@
 
+//layouts
+import HeroSection from "../layout/HeroSection";
 
 const Home = () => {
   return (
     <>
-      <h2>this is home page</h2>
+     <HeroSection />
     </>
   )
 }

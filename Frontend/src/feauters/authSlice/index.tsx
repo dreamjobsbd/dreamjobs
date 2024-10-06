@@ -6,7 +6,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { api } from "../../services/apiService";
 
 //types
-import { authState , User , loginCredentilas } from "./authSliceType";
+import { authState, User, loginCredentilas } from "./authSliceType";
 
 
 //define state for authslice
@@ -16,14 +16,17 @@ export const initialState: authState = {
   error: null
 }
 
+
 //async thunk for login
 export const login = createAsyncThunk("auth/login",
   async (credentials: loginCredentilas, { rejectWithValue }) => {
     try {
       const res = await api.post("/auth/login", credentials);
       console.log(res);
-      if (res.data.success){
-         window.location.reload();
+      if (res.data.success){ 
+        return res.data;
+      } else {
+        return rejectWithValue(res.data.message || "Login failed");
       }
     } catch (error: any) {
       console.log(error.response?.data?.message);
@@ -87,14 +90,15 @@ export const authSlice = createSlice({
       //handle login states
       .addCase(login.pending, (state) => {
         state.isLoading = true
-        state.user = null
+        state.error = null
+
       })
       .addCase(login.fulfilled, (state) => {
           state.isLoading = false
-          state.user = null
+          state.error = null
       })
       .addCase(login.rejected, (state, action) => {
-        state.user = null;
+        state.isLoading = false
         state.error = action.payload as string;
       })
 
