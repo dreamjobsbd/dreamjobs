@@ -49,6 +49,18 @@ export const validateJobPost = [
        .notEmpty()
        .withMessage("please provide employment status"),
 
+    body("category")
+       .trim()
+       .notEmpty()
+       .withMessage("please provide categoy for this job"),
+       
+    body("applicationProcessType")
+       .trim()
+       .notEmpty()
+       .withMessage("please provide application process type")
+       .isIn(["link", "email"])
+       .withMessage("application process type must be either 'link' or 'email'"),
+
     body("applicationProcess")
         .trim()
         .notEmpty()

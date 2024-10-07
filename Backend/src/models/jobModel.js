@@ -55,6 +55,17 @@ const jobPostSchema = new Schema(
       required: true,
     },
 
+    category : {
+      type : Schema.Types.ObjectId,
+      ref : "Category",
+      required : [true, "category must be provided"]
+    },
+
+    applicationProcessType : {
+      type : String,
+      enum : ["link", "email"]
+    },
+
     applicationProcess: {
       type: String,
       trim: true,

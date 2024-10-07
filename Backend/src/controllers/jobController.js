@@ -1,8 +1,9 @@
 
 "use strict";
 
-import { SuccessResponse } from "../helpers/apiResponse.js";
+import { ErrorResponse, SuccessResponse } from "../helpers/apiResponse.js";
 import JobPost from "../models/jobModel.js";
+import Category from "../models/categoryModel.js"
 
 
 export const CreateJobPost = async (req, res, next) => {
@@ -17,8 +18,19 @@ export const CreateJobPost = async (req, res, next) => {
       experience,
       salary,
       employmentStatus,
+      category,
+      applicationProcessType,
       applicationProcess,
     } = req.body;
+
+    //find the category by name , if invalid send error response
+    const categoryDoc = await Category.findOne({ name: category });
+    if (!categoryDoc) {
+      return ErrorResponse(res,{
+        statusCode : 400,
+        message : "category name is invalid"
+      })
+    }
 
     const newJobPost = new JobPost({
       companyName,
@@ -30,6 +42,8 @@ export const CreateJobPost = async (req, res, next) => {
       experience,
       salary,
       employmentStatus,
+      category : categoryDoc._id,
+      applicationProcessType,
       applicationProcess,
     });
 

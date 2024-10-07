@@ -15,6 +15,7 @@ import ConnectDatabase from "./config/Database.js";
 import userRoute from "./routes/userRoute.js";
 import authRoute from "./routes/authRoute.js";
 import jobRoute from "./routes/jobRoute.js";
+import categoryRoute from "./routes/categoryRoute.js";
 
 //env
 import { serverPort } from "./hiddenEnv.js";
@@ -41,6 +42,7 @@ app.use(cookie());
 app.use("/user",userRoute);
 app.use("/auth",authRoute);
 app.use("/job",jobRoute);
+app.use("/category",categoryRoute)
 
 //home route
 app.get("/", function (req, res) {
