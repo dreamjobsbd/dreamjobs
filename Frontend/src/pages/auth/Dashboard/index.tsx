@@ -1,34 +1,114 @@
 
-import {useAppSelector, useAppDispatch } from "../../../app/hook";
-
+import { useState } from 'react';
+import { useAppSelector, useAppDispatch } from "../../../app/hook";
 import { logout } from "../../../feauters/authSlice";
 
-const index = () => {
 
-    const dispatch = useAppDispatch();
-    const {user} = useAppSelector((state) => state.auth);
+//icons
+import { IoMdHome } from "react-icons/io";
+import { FaUserCheck } from "react-icons/fa";
+import { IoIosSettings } from "react-icons/io";
+import { MdOutlineLogout } from "react-icons/md";
 
-    const handleLogout = () => {
-      dispatch(logout());
-    }
-   
-    
-    if(user){
+
+const Dashboard = () => {
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const [activeTab, setActiveTab] = useState('home');
+
+  const handleLogout = () => {
+    dispatch(logout());
+  }
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'home':
         return (
-            <div style={{textAlign: "center"}}>
-             <h2>welcome, {user?.fullName}</h2>
-             <p style={{margin : "0rem"}} >email : {user?.email}</p>
-             <p>number : {user?.phoneNumber}</p>
-             <button onClick={handleLogout}>Logout</button>
-            </div>
-          ) 
-    }else {
-        <>
-        <h2>No user is Logged in</h2>
-        </>
+          <div className="p-6">
+            <h2 className="text-2xl font-bold mb-4">Welcome to Your Dashboard</h2>
+            <p>Select an option from the sidebar to view more information.</p>
+          </div>
+        );
+      case 'userInfo':
+        return (
+          <div className="p-6">
+            <h2 className="text-2xl font-bold mb-4">User Information</h2>
+            {user ? (
+              <>
+                <p className="mb-2">Name: {user.fullName}</p>
+                <p className="mb-2">Email: {user.email}</p>
+                <p className="mb-4">Phone: {user.phoneNumber}</p>
+              </>
+            ) : (
+              <p>No user is logged in.</p>
+            )}
+          </div>
+        );
+      case 'settings':
+        return (
+          <div className="p-6">
+            <h2 className="text-2xl font-bold mb-4">Settings</h2>
+            <p>This is where you would put your settings options.</p>
+          </div>
+        );
+      default:
+        return null;
     }
+  }
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <div className="container flex mx-0 2xl:mx-auto">
+      {/* Sidebar */}
+      <div className=" w-20 bg-gray-900 text-white md:w-64  ">
+        <div className="p-4">
+          <h1 className="text-2xl font-bold hidden px-4 md:block">Dashboard</h1>
+        </div>
+        <nav className="mt-6">
+          <a
+            className={`flex items-center py-2 px-8 ${activeTab === 'home' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+            onClick={() => setActiveTab('home')}
+          >
+            <span><IoMdHome /></span>
+            <p className='ms-2 hidden md:block'>Home</p>
+          </a>
+          <a
+            className={`flex items-center py-2 px-8 ${activeTab === 'userInfo' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+            onClick={() => setActiveTab('userInfo')}
+          >
+            <span><FaUserCheck /></span>
+            <p className='ms-2 hidden md:block'>User Info</p>
 
 
+          </a>
+          <a
+            className={`flex items-center py-2 px-8 ${activeTab === 'settings' ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+            onClick={() => setActiveTab('settings')}
+          >
+            <span><IoIosSettings /></span>
+            <p className='ms-2 hidden md:block'>Settings</p>
+          </a>
+
+          <a
+            className={`flex items-center py-2 px-8 hover:bg-gray-700`}
+            onClick={handleLogout}
+          >
+            <span><MdOutlineLogout /></span>
+            <p className='ms-2 hidden md:block'>Logout</p>
+          </a>
+
+
+        </nav>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto">
+        {renderContent()}
+      </div>
+      </div>
+
+    </div>
+  );
 }
 
-export default index
+export default Dashboard;
