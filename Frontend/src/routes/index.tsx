@@ -9,6 +9,7 @@ import Register from "../pages/auth/Register";
 import Dashboard from "../pages/auth/Dashboard"
 import ActivateUser from "../pages/auth/ActivateUser"
 import PostJob from "../pages/Jobs/PostJob"
+import GetJobs from "../pages/Jobs/GetJobs";
 
 const routes : RouteObject[] = [
     {
@@ -38,6 +39,10 @@ const routes : RouteObject[] = [
         {
           path : "/post-job",
           element : <PostJob />
+        },
+        {
+          path : "/jobs",
+          element : <GetJobs />
         }
         
       ],

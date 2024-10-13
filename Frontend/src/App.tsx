@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./app/hook";
 
 import { getCurrentUser, loadAccessToken } from "./feauters/authSlice";
+import { GetJobs } from "./feauters/JobsSlice";
 
 function App() {
  
@@ -16,8 +17,9 @@ function App() {
   const {user} = useAppSelector((state)=> state.auth);
 
   useEffect(()=>{
-    if(user===null) dispatch(loadAccessToken());
+    dispatch(GetJobs())
     dispatch(getCurrentUser());
+    if(user===null) dispatch(loadAccessToken());
   },[]);
 
   return (
