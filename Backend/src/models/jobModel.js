@@ -14,12 +14,18 @@ const jobPostSchema = new Schema(
       required: true,
     },
 
+    category : {
+      type : Schema.Types.ObjectId,
+      ref : "Category",
+      required : [true, "category must be provided"]
+    },
+
     jobDescription: {
       type: String,
       trim: true,
     },
 
-    responsibilities: {
+    education: {
       type: String,
       trim: true,
       required: true,
@@ -31,7 +37,7 @@ const jobPostSchema = new Schema(
       required: true,
     },
 
-    education: {
+    responsibilities: {
       type: String,
       trim: true,
       required: true,
@@ -55,15 +61,20 @@ const jobPostSchema = new Schema(
       required: true,
     },
 
-    category : {
-      type : Schema.Types.ObjectId,
-      ref : "Category",
-      required : [true, "category must be provided"]
+    locationType: {
+     type : String,     
     },
 
-    applicationProcessType : {
+    jobLocation: {
       type : String,
-      enum : ["link", "email"]
+    },
+
+    gender : {
+      type : String,
+    },
+
+    age : {
+      type : String,
     },
 
     applicationProcess: {
@@ -71,6 +82,7 @@ const jobPostSchema = new Schema(
       trim: true,
       required: true,
     },
+
   },
   { timestamps: true }
 );

@@ -7,12 +7,12 @@ export interface JobType {
   jobDescription : string,
   responsibilities : string,
   skills : string,
-  Education : string,
+  education : string,
   experience : string,
   salary : string,
   employmentStatus : string,
   category : string,
-  applicationProcessType : string,
+  jobLocation : string,
   applicationProcess : string,
   
 }

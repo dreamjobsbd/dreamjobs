@@ -4,13 +4,18 @@
 export interface FormData {
     companyName: string;
     jobTitle: string;
+    category : string;
     jobDescription: string;
     responsibilities: string;
     skills: string;
     education: string;
     experience: string;
     salary: string;
+    locationType : string;
+    jobLocation : string;
     employmentStatus: string;
+    gender : string,
+    age : string,
     applicationProcess: string;
   }
   

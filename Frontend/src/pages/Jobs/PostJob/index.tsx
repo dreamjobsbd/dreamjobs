@@ -16,19 +16,15 @@ const PostJob: React.FC = () => {
     experience: "",
     salary: "",
     employmentStatus: "",
+    locationType: "",
+    jobLocation: "",
+    category: "",
+    gender: "",
+    age: "",
     applicationProcess: ""
   });
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
   const formFields: FormField[] = [
-    { name: "companyName", label: "Company Name" },
+    { name: "companyName", label: "Company Name"},
     { name: "jobTitle", label: "Job Title" },
     { name: "jobDescription", label: "Job Description" },
     { name: "responsibilities", label: "Responsibilities" },
@@ -36,10 +32,21 @@ const PostJob: React.FC = () => {
     { name: "education", label: "Education" },
     { name: "experience", label: "Experience" },
     { name: "salary", label: "Salary" },
-    { name: "employmentStatus", label: "Employment Status" },
-    { name: "applicationProcess", label: "Application Process" }
+    { name: "employmentStatus", label: "Employment Status"},
+    { name : "age", label: "Age"},
+    { name : "jobLocation", label : "Job Location"},
+    { name : "locationType", label : "Location Type"},
+    { name : "category" , label : "Category"},
+    { name : "gender", label: "gender"},
+    { name: "applicationProcess", label: "Application Process"}
   ];
-
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
   const PostAJob = async (e: FormEvent) => {
     e.preventDefault();
@@ -63,10 +70,12 @@ const PostJob: React.FC = () => {
                 value={formData[field.name]}
                 onChange={handleInputChange}
                 placeholder={`Enter ${field.label.toLowerCase()}`}
-                required
+                
               />
             </div>
           ))}
+
+          
           <button type="submit" className="mt-6 w-full bg-[#0266FF] text-white font-semibold py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-color">post job</button>
         </form>
       </div>
