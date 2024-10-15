@@ -9,7 +9,8 @@ const GetJobs = () => {
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const searchTerm = searchParams.get('search') || '';
-  console.log(jobs);
+
+  
   
   useEffect(() => {
     if (!jobs) {
@@ -47,7 +48,7 @@ const GetJobs = () => {
           {filteredJobs.map((job)=> {
             const {_id, companyName, jobTitle, salary, education,jobLocation} = job;
             
-             return <Link to={`/`} className=''> 
+             return <Link key={_id} to={`/job/${_id}`} className=''> 
              <li key={_id} className="border p-4 rounded-md">
               <h3 className="text-xl font-semibold">{jobTitle}</h3>
               <p className="text-gray-600"><strong>{companyName}</strong> </p>

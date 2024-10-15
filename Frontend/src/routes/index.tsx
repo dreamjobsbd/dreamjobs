@@ -10,6 +10,7 @@ import Dashboard from "../pages/auth/Dashboard"
 import ActivateUser from "../pages/auth/ActivateUser"
 import PostJob from "../pages/Jobs/PostJob"
 import GetJobs from "../pages/Jobs/GetJobs";
+import SingleJob from "../pages/Jobs/SingleJob";
 
 const routes : RouteObject[] = [
     {
@@ -43,6 +44,10 @@ const routes : RouteObject[] = [
         {
           path : "/jobs",
           element : <GetJobs />
+        },
+        {
+          path : "/job/:id",
+          element : <SingleJob />
         }
         
       ],

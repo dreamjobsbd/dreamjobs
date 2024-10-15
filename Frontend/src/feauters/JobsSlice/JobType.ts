@@ -11,8 +11,11 @@ export interface JobType {
   experience : string,
   salary : string,
   employmentStatus : string,
+  age : string,
   category : string,
   jobLocation : string,
+  locationType : string,
+  gender : string,
   applicationProcess : string,
   
 }
