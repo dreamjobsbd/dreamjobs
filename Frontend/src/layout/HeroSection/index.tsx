@@ -8,7 +8,7 @@ const HeroSection = () => {
 
 
   const handleSearch = () => {
-    if(inputValue.length <= 4){
+    if(inputValue.length <= 3){
       return alert("please type a valid job name")
     }
     navigate(`/jobs?search=${encodeURIComponent(inputValue)}`);
