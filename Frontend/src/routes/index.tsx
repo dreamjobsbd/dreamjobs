@@ -11,6 +11,7 @@ import ActivateUser from "../pages/auth/ActivateUser"
 import PostJob from "../pages/Jobs/PostJob"
 import GetJobs from "../pages/Jobs/GetJobs";
 import SingleJob from "../pages/Jobs/SingleJob";
+import JobsByCategory from "../pages/Jobs/JobsByCategory";
 
 const routes : RouteObject[] = [
     {
@@ -44,6 +45,10 @@ const routes : RouteObject[] = [
         {
           path : "/jobs",
           element : <GetJobs />
+        },
+        {
+          path : "/jobs/:slug",
+          element : <JobsByCategory />
         },
         {
           path : "/job/:id",

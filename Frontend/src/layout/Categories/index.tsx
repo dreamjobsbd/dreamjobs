@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react"
 import { api } from "../../services/apiService";
-
+import { Link } from "react-router-dom";
 
 
 const Categories = () => {
@@ -20,6 +20,7 @@ const Categories = () => {
   }, []);
 
 
+  
 
   return (
     <>
@@ -28,10 +29,11 @@ const Categories = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {categories.length > 0 ? (
           categories.map((c:any, i) => (
-            <div key={i} className="category bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+            
+            <Link to={`/jobs/${c.slug}`} key={i} className="category bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
               <div className="font-semibold text-lg mb-2">{c.name}</div>
               <div className="text-sm text-gray-600">58 jobs</div>
-            </div>
+            </Link>
           ))
         ) : (
           <div className="col-span-full text-center py-8">Loading...</div>

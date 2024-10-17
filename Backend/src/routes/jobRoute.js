@@ -4,6 +4,7 @@ import {
   CreateJobPost,
   GetJobPosts,
   GetSingleJobPostById,
+  GetJobPostsByCategory
 } from "../controllers/jobController.js";
 
 //validation
@@ -17,5 +18,9 @@ const jobRoute = express.Router();
 jobRoute.post("/post-job",validateJobPost, RunValidation, IsLoggedIn, IsAdmin, CreateJobPost);
 jobRoute.get("/all-job", GetJobPosts);
 jobRoute.get("/:id", GetSingleJobPostById);
+jobRoute.get("/category/:slug",GetJobPostsByCategory);
+
+
+
 
 export default jobRoute;

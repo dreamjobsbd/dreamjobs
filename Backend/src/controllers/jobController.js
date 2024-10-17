@@ -65,6 +65,19 @@ export const CreateJobPost = async (req, res, next) => {
   }
 };
 
+export const GetJobPosts = async (req, res, next) => {
+  try {
+      const jobPosts = await JobPost.find({});
+
+      return SuccessResponse(res,{
+        statusCode : 200,
+        message : "return all the jobs",
+        payload : { jobPosts }
+      })
+  } catch (error) {
+     next(error)
+  }
+}
 
 export const GetSingleJobPostById = async (req, res, next) =>  {
   try {
@@ -84,16 +97,35 @@ export const GetSingleJobPostById = async (req, res, next) =>  {
 }
 
 
-export const GetJobPosts = async (req, res, next) => {
+export const GetJobPostsByCategory = async (req, res, next) => {
   try {
-      const jobPosts = await JobPost.find({});
+    const { slug } = req.params; 
+    
+    // Find the category by slug
+    const category = await Category.findOne({ slug });
+    
+    if (!category) {
+      return res.status(404).json({
+        success: false,
+        message: "Category not found",
+      });
+    }    
 
-      return SuccessResponse(res,{
-        statusCode : 200,
-        message : "return all the jobs",
-        payload : { jobPosts }
-      })
+    // Find job posts for this category
+    const jobsByCategory = await JobPost.find({ category: category._id })
+
+    return SuccessResponse(res, {
+      statusCode : 200,
+      message : "jobs by cateories",
+      payload : { jobsByCategory }
+    })
+
   } catch (error) {
-     next(error)
+    next(error);
   }
-}
+};
+
+
+
+
+
