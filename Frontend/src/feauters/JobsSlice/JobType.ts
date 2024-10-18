@@ -1,22 +1,26 @@
 
 
 export interface JobType {
-  _id : string,
-  companyName : string,
-  jobTitle : string,
-  jobDescription : string,
-  responsibilities : string,
-  skills : string,
-  education : string,
-  experience : string,
-  salary : string,
-  employmentStatus : string,
-  age : string,
-  category : string,
-  jobLocation : string,
-  locationType : string,
+  companyName: string;
+  jobTitle: string;
+  salary: string;
+  category : string;
+  applicationProcess: string;
+  jobDescription: string;
+  education: string;
+  skills: string;
+  responsibilities: string;
+  experience: string;
+  benefits: string;
+  employmentStatus: string;
+  locationType : string;
+  jobLocation : string;
   gender : string,
-  applicationProcess : string,
+  age : string,
+  vacancy: string;
+  source : string;
+  deadline : string,
+  optionalInfo : string
   
 }
 
