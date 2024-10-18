@@ -11,19 +11,24 @@ export const CreateJobPost = async (req, res, next) => {
     const {
       companyName,
       jobTitle,
+      salary,
       category,
+      applicationProcess,
       jobDescription,
       education,
       skills,
       responsibilities,
       experience,
-      salary,
+      benefits,
       employmentStatus,
       locationType,
       jobLocation,
       gender,
       age,
-      applicationProcess,
+      vacancy,
+      source,
+      deadline,
+      optionalInfo
     } = req.body;
 
     //find the category by name , if invalid send error response
@@ -38,19 +43,24 @@ export const CreateJobPost = async (req, res, next) => {
     const newJobPost = new JobPost({
       companyName,
       jobTitle,
-      category :categoryDoc._id,
+      salary,
+      category : categoryDoc._id,
+      applicationProcess,
       jobDescription,
       education,
       skills,
       responsibilities,
       experience,
-      salary,
+      benefits,
       employmentStatus,
       locationType,
       jobLocation,
       gender,
       age,
-      applicationProcess,
+      vacancy,
+      source,
+      deadline,
+      optionalInfo
     });
 
     await newJobPost.save();
@@ -124,6 +134,23 @@ export const GetJobPostsByCategory = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteJobByID = async (req, res, next) => {
+  try {
+     const {id} = req.params;
+     
+     const deleteJob = await JobPost.findByIdAndDelete({_id : id});
+
+     if(!deleteJob) return ErrorResponse('no job found with this id');
+
+     return SuccessResponse (res, {
+      statusCode : 200,
+      message : "delete job successfully",
+     })
+  } catch (error) {
+    next(error)
+  }
+}
 
 
 

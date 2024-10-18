@@ -14,10 +14,22 @@ const jobPostSchema = new Schema(
       required: true,
     },
 
+    salary: {
+      type: String,
+      trim: true,
+      required: true,
+    },
+
     category : {
       type : Schema.Types.ObjectId,
       ref : "Category",
-      required : [true, "category must be provided"]
+      required: true,
+    },
+
+    applicationProcess: {
+      type: String,
+      trim: true,
+      required: true,
     },
 
     jobDescription: {
@@ -28,60 +40,72 @@ const jobPostSchema = new Schema(
     education: {
       type: String,
       trim: true,
-      required: true,
     },
 
     skills: {
       type: String,
       trim: true,
-      required: true,
     },
 
     responsibilities: {
       type: String,
       trim: true,
-      required: true,
     },
 
     experience: {
       type: String,
       trim: true,
-      required: true,
     },
 
-    salary: {
-      type: String,
-      trim: true,
-      required: true,
+    benefits : {
+      type : String,
+      trim : true,  
     },
 
     employmentStatus: {
       type: String,
       trim: true,
-      required: true,
     },
 
     locationType: {
-     type : String,     
+     type : String,
+     trim : true,     
     },
 
     jobLocation: {
       type : String,
+      trim : true,
     },
 
     gender : {
       type : String,
+      trim : true,
     },
 
     age : {
       type : String,
+      trim : true,
     },
 
-    applicationProcess: {
-      type: String,
-      trim: true,
-      required: true,
+    vacancy : {
+      type : String,
+      trim : true,
     },
+
+    source : {
+      type : String,
+      trim : true,
+    },
+
+    deadline : {
+      type : String,
+      trim : true,
+    },
+
+    optionalInfo : {
+      type : String,
+      trim : true,
+    }
 
   },
   { timestamps: true }

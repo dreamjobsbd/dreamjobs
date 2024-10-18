@@ -18,42 +18,38 @@ export const validateJobPost = [
     body("category")
        .trim()
        .notEmpty()
-       .withMessage("please provide categoy for this job"),    
+       .withMessage("please provide categoy for this job"),
+       
+    body("salary")
+       .trim()
+       .notEmpty()
+       .withMessage("please provide a salary"),   
+
+    body("applicationProcess")
+       .trim()
+       .notEmpty()
+       .withMessage("Please provide a Application process"),   
         
     body("jobDescription")
         .trim(),
 
     body("education")
-        .trim()
-        .notEmpty()
-        .withMessage("please provide education"),
+        .trim(),
         
     body("skills")
-        .trim()
-        .notEmpty()
-        .withMessage("please provide skills"),
+        .trim(),
     
     body("responsibilities")
-        .trim()
-        .notEmpty()
-        .withMessage("please provide Responsibilities"),    
-
+        .trim(),
     
     body("experience")
-        .trim()
-        .notEmpty()
-        .withMessage("please provide a expereince"),
+        .trim(),
 
-    body("salary")
-        .trim()
-        .notEmpty()
-        .withMessage("please provide a salary"),
+    body("benefits")
+    .trim(),
     
     body("employmentStatus")
-       .trim()
-       .notEmpty()
-       .withMessage("please provide employment status"),
-
+       .trim(),
 
     body("locationType")
     .trim(),
@@ -62,16 +58,21 @@ export const validateJobPost = [
     .trim(),
 
     body("gender")
-     .trim(),
+    .trim(),
 
     body("age")
-     .trim(), 
+    .trim(),
 
-       
-    body("applicationProcess")
-        .trim()
-        .notEmpty()
-        .withMessage("Please provide a Application process"),
+    body("vacancy")
+    .trim(), 
+
+    body("source")
+    .trim(),
     
+    body("deadline")
+    .trim(),
+
+    body("optionalInfo")
+    .trim(),
 
 ]

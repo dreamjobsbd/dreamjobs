@@ -4,7 +4,8 @@ import {
   CreateJobPost,
   GetJobPosts,
   GetSingleJobPostById,
-  GetJobPostsByCategory
+  GetJobPostsByCategory,
+  deleteJobByID
 } from "../controllers/jobController.js";
 
 //validation
@@ -19,8 +20,6 @@ jobRoute.post("/post-job",validateJobPost, RunValidation, IsLoggedIn, IsAdmin, C
 jobRoute.get("/all-job", GetJobPosts);
 jobRoute.get("/:id", GetSingleJobPostById);
 jobRoute.get("/category/:slug",GetJobPostsByCategory);
-
-
-
+jobRoute.delete("/delete-job/:id",IsLoggedIn, IsAdmin, deleteJobByID);
 
 export default jobRoute;
