@@ -154,23 +154,50 @@ export const UserLogin = async (req, res, next) => {
 
 
 
-export const UserLogout = (req, res, next) => {
-    try {
+// export const UserLogout = (req, res, next) => {
+//     try {
 
-        //clear the refresh token cookie
-        res.clearCookie("refreshToken");
-        //clear the access token cookie
-        res.clearCookie("accessToken");
+//         //clear the refresh token cookie
+//         res.clearCookie("refreshToken");
+//         //clear the access token cookie
+//         res.clearCookie("accessToken");
     
-        //return successful response
-        return SuccessResponse(res, {
+//         //return successful response
+//         return SuccessResponse(res, {
+//           statusCode: 200,
+//           message: "user logged out successfully",
+//         });
+//       } catch (error) {
+//         next(error);
+//       }
+// }
+
+export const UserLogout = (req, res, next) => {
+  try {
+      // Clear refresh token with proper options
+      res.clearCookie('refreshToken', {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+          path: '/'
+      });
+
+      // Clear access token with proper options
+      res.clearCookie('accessToken', {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+          path: '/'
+      });
+
+      return SuccessResponse(res, {
           statusCode: 200,
           message: "user logged out successfully",
-        });
-      } catch (error) {
-        next(error);
-      }
-}
+      });
+  } catch (error) {
+      next(error);
+  }
+};
 
 
 

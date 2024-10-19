@@ -13,6 +13,7 @@ export interface authState {
     user: User | null,
     isLoading: boolean,
     error: null | string,
+    isLoggedIn : boolean,
 }
 
 

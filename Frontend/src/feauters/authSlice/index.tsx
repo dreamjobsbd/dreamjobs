@@ -13,7 +13,8 @@ import { authState, User, loginCredentilas } from "./authSliceType";
 export const initialState: authState = {
   user: null,
   isLoading: false,
-  error: null
+  error: null,
+  isLoggedIn : false
 }
 
 
@@ -24,6 +25,7 @@ export const login = createAsyncThunk("auth/login",
       const res = await api.post("/auth/login", credentials);
       console.log(res);
       if (res.data.success){ 
+        localStorage.setItem('isLoggedIn', 'true'); // Add this line
         return res.data;
       } else {
         return rejectWithValue(res.data.message || "Login failed");
@@ -35,15 +37,33 @@ export const login = createAsyncThunk("auth/login",
 });
 
 //async thunk for logout
+// export const logout = createAsyncThunk("auth/logout",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       await api.post("/auth/logout");
+//       localStorage.removeItem('isLoggedIn'); // Add this line
+//     } catch (error: any) {
+//       rejectWithValue(error.respons?.data?.message);
+//     }
+//   }
+// )
+
+
 export const logout = createAsyncThunk("auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      await api.post("/auth/logout");
+      const res = await api.post("/auth/logout");
+      // Clear any stored tokens in localStorage if you're using it
+      localStorage.removeItem('isAuthenticated');
+      // Reset the API instance if you have any default headers
+      api.defaults.headers.common['Authorization'] = '';
+      return res.data;
     } catch (error: any) {
-      rejectWithValue(error.respons?.data?.message);
+      return rejectWithValue(error.response?.data?.message || "Logout failed");
     }
   }
-)
+);
+
 
 //async thunk to get current user
 export const getCurrentUser = createAsyncThunk("auth/getCurrentUser",
@@ -52,6 +72,7 @@ export const getCurrentUser = createAsyncThunk("auth/getCurrentUser",
       const res = await api.get("/auth/current-user");
       return res.data.payload.user;
     } catch (error: any) {
+      localStorage.removeItem('isLoggedIn'); // Add this line
       return rejectWithValue(error.response?.data?.message);
     }
   });
@@ -84,18 +105,25 @@ export const loadAccessToken = createAsyncThunk("/auth/loadAccessToken",
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    resetAuth: (state) => {
+      state.user = null;
+      state.isLoading = false;
+      state.error = null;
+    }
+  },
   extraReducers(builder) {
     builder
       //handle login states
       .addCase(login.pending, (state) => {
         state.isLoading = true
         state.error = null
-
+        state.isLoggedIn = true; // Add this line
       })
       .addCase(login.fulfilled, (state) => {
           state.isLoading = false
           state.error = null
+
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
@@ -103,8 +131,24 @@ export const authSlice = createSlice({
       })
 
       //handle logout
+      // .addCase(logout.fulfilled, (state) => {
+      //   state.user = null;
+      //   state.isLoggedIn = false; // Add this line
+      // })
+
+      .addCase(logout.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+        state.isLoading = false;
+        state.error = null;
+        clearTimeout(refreshTokenTimeout);
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload as string;
       })
 
       //handle get current user states
@@ -114,10 +158,14 @@ export const authSlice = createSlice({
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload as User;
+        state.isLoggedIn = true; // Add this line
+
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string
+        state.isLoggedIn = false; // Add this line
+
       })
 
       //handle load access token states
@@ -132,4 +180,5 @@ export const authSlice = createSlice({
 
 })
 
+export const {resetAuth} = authSlice.actions;
 export default authSlice.reducer;

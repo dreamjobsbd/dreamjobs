@@ -1,8 +1,8 @@
 
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from "../../../app/hook";
-import { logout } from "../../../feauters/authSlice";
-
+import { logout, resetAuth  } from "../../../feauters/authSlice";
+import { useNavigate } from 'react-router-dom';
 
 //icons
 import { IoMdHome } from "react-icons/io";
@@ -13,11 +13,27 @@ import { MdOutlineLogout } from "react-icons/md";
 
 const Dashboard = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState('home');
 
-  const handleLogout = () => {
-    dispatch(logout());
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  // }
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logout()).unwrap();
+      // Reset auth state
+      dispatch(resetAuth());
+      // Redirect to login page
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Force reset auth state even if API call fails
+      dispatch(resetAuth());
+      navigate('/login');
+    }
   }
 
   const renderContent = () => {

@@ -26,10 +26,17 @@ import { ErrorResponse } from "./helpers/apiResponse.js";
 //create an express application;
 const app = express();
 
-const corsOptions = {
-    origin : "http://localhost:5173",
-    credentials : true,
- }
+// const corsOptions = {
+//     origin : "http://localhost:5173",
+//     credentials : true,
+//  }
+
+app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 //middlewares
 app.use(morgan("dev"));
