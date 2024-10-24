@@ -32,7 +32,7 @@ const app = express();
 //  }
 
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: ["http://localhost:4000","https://flexywork-backend.onrender.com"],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -40,7 +40,6 @@ app.use(cors({
 
 //middlewares
 app.use(morgan("dev"));
-app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(cookie());
