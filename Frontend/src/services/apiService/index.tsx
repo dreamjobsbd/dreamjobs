@@ -1,12 +1,10 @@
 
 // import axios from "axios";
 
-// export const api = axios.create({
-//     baseURL : "https://flexywork-backend.onrender.com",
-//     withCredentials : true,
-// })
 
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { resetAuth } from '../../feauters/authSlice';
 
 export const api = axios.create({
   baseURL: "https://flexywork-backend.onrender.com",
@@ -22,7 +20,7 @@ api.interceptors.request.use(
     // You might want to add any default headers here
     return config;
   },
-  (error) => {
+  (error) => { 
     return Promise.reject(error);
   }
 );
@@ -33,7 +31,8 @@ api.interceptors.response.use(
   async (error) => {
     if (error.response?.status === 401) {
       // Handle unauthorized error
-      // You might want to dispatch resetAuth() here
+      const dispatch = useDispatch()
+      dispatch(resetAuth());
     }
     return Promise.reject(error);
   }

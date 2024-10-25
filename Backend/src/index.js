@@ -25,16 +25,10 @@ import { ErrorResponse } from "./helpers/apiResponse.js";
 
 //create an express application;
 const app = express();
-
-// const corsOptions = {
-//     origin : "http://localhost:5173",
-//     credentials : true,
-//  }
-
 app.use(cors({
-    origin: ["http://localhost:4000","https://flexywork-backend.onrender.com"],
+    origin: ["http://localhost:5173","https://flexywork.vercel.app"],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
@@ -69,11 +63,23 @@ app.use(function (err, req, res, next) {
 });
 
 
-//Start the Express application listening
-app.listen(serverPort, async function () {
-    console.log(`server running at http://localhost:${serverPort}`);
-    await ConnectDatabase()
-});
+// Start the Express application listening
+const startServer = async () => {
+    try {
+      // Connect to database first
+      await ConnectDatabase();
+      
+      // Only start listening once database is connected
+      app.listen(serverPort, () => {
+        console.log(`Server running at http://localhost:${serverPort}`);
+      });
+    } catch (error) {
+      console.error('Failed to start server:', error);
+      process.exit(1);
+    }
+};
+
+startServer();
 
 
 export default app;
