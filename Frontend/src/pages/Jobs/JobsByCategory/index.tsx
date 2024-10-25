@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 //icons
-import { Briefcase, MapPin, Clock , Banknote } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Banknote } from 'lucide-react';
 
 //api 
 import { api } from '../../../services/apiService';
@@ -18,7 +18,7 @@ const JobsByCategory = () => {
     try {
       const res = await api.get(`/job/category/${slug}`);
       if (res.status === 200) setCategoryJobs(res.data.payload.jobsByCategory);
-    } catch (error : any) {
+    } catch (error: any) {
       console.log(error);
     }
   };
@@ -39,15 +39,15 @@ const JobsByCategory = () => {
     <div className="bg-gray-50 min-h-screen py-8">
       <div className="mx-auto px-4 max-w-5xl">
         <h1 className="text-2xl font-bold mb-6 text-gray-800">
-          Available Jobs 
+          Available Jobs
         </h1>
-        
+
         <div className="space-y-4">
           {categoryJobs.map((job) => {
-            const { _id, jobTitle, companyName, jobLocation, salary } = job;
+            const { _id, jobTitle, companyName, jobLocation, salary, deadline } = job;
             return (
-              <Link 
-                key={_id} 
+              <Link
+                key={_id}
                 to={`/job/${_id}`}
                 className="block"
               >
@@ -70,18 +70,21 @@ const JobsByCategory = () => {
                             <span>{jobLocation}</span>
                           </div>
                         )}
-                        
+
                         {salary && (
                           <div className="flex items-center text-gray-600">
                             <Banknote className="w-4 h-4 mr-2" />
                             <span>{salary}</span>
                           </div>
                         )}
-                        
-                        <div className="flex items-center text-gray-600">
-                          <Clock className="w-4 h-4 mr-2" />
-                          <span>Deadline: 25 Oct 2024</span>
-                        </div>
+
+                        {deadline && (
+                          <div className="flex items-center text-gray-600">
+                            <Clock className="w-4 h-4 mr-2" />
+                            <span>{deadline}</span>
+                          </div>
+                        )}
+
                       </div>
                       <span className="inline-flex items-center text-blue-600 font-medium hover:text-blue-700 md:ml-4">
                         View Details

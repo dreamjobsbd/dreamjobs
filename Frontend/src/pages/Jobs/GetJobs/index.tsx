@@ -69,17 +69,21 @@ const GetJobs: React.FC = () => {
       ) : (
         <ul className="space-y-4">
           {filteredJobs.map((job) => {
-            const { _id, companyName, jobTitle, salary, education, jobLocation } = job;
+            const { _id, companyName, jobTitle, salary, jobLocation, vacancy, deadline } = job;
             return (
               <Link key={_id} to={`/job/${_id}`} className="">
-                <li className="border p-4 rounded-md">
+                <li className="border p-4 rounded-md mb-3">
                   <h3 className="text-xl font-semibold">{jobTitle}</h3>
                   <p className="text-gray-600"><strong>{companyName}</strong></p>
                   <div className="flex">
-                    <p className="me-5">Job Location: {jobLocation}</p>
-                    <p>Salary: {salary}</p>
+                    <p className="me-5"> <span className='font-medium'>Job Location</span>: {jobLocation}</p>
+                    <p><span className='font-medium'>Salary:</span> {salary}</p>
                   </div>
-                  <p>Education: {education}</p>
+                  <div className='flex'>
+                  {vacancy && <p className="me-5"><span className='font-medium'>vacancy :</span> {vacancy}</p>}
+                  {deadline && <p className="me-5"><span className='font-medium'>Deadline:</span> {deadline}</p>}
+                  </div>
+
                 </li>
               </Link>
             );

@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { resetAuth } from '../../feauters/authSlice';
 
 export const api = axios.create({
-  baseURL: "https://flexywork-backend.onrender.com",
+  baseURL: "https://flexywork-backend.vercel.app",
   withCredentials: true, // This is crucial for cookie handling
   headers: {
     'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 
 
 export interface JobType {
+  _id : string;
   companyName: string;
   jobTitle: string;
   salary: string;
