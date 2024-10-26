@@ -73,7 +73,7 @@ const Register = () => {
           <div className="mb-3">
             <label htmlFor="" className="block text-gray-700 font-medium mb-2">Password: </label>
             <input
-              type="email"
+              type="password"
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-color"

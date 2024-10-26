@@ -45,7 +45,7 @@ export const UserRegistration = async (req, res, next) => {
             subject : "Activate Email From Flexywork",
             html : ` <h2>Hello ${fullName}</h2>
             <p>please click on the following link to activate your email</p>
-            <a href="${clientUrl}user/activate/${token}" target="blank">
+            <a href="${clientUrl}/user/activate/${token}" target="blank">
             activate account</a>`
 
         }
