@@ -1,5 +1,5 @@
 
-import {createBrowserRouter, RouteObject} from "react-router-dom";
+import {createBrowserRouter} from "react-router-dom";
 import Root from "../Root";
 
 //pages
@@ -13,50 +13,59 @@ import GetJobs from "../pages/Jobs/GetJobs";
 import SingleJob from "../pages/Jobs/SingleJob";
 import JobsByCategory from "../pages/Jobs/JobsByCategory";
 
-const routes : RouteObject[] = [
-    {
-      path: "/",
-      element: <Root />,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/register",
-          element: <Register />,
-        },
-        {
-          path : "/dashboard",
-          element : <Dashboard />
-        },
-        {
-          path : "user/activate/:token",
-          element : <ActivateUser />
-        },
-        {
-          path : "/post-job",
-          element : <PostJob />
-        },
-        {
-          path : "/jobs",
-          element : <GetJobs />
-        },
-        {
-          path : "/jobs/:slug",
-          element : <JobsByCategory />
-        },
-        {
-          path : "/job/:id",
-          element : <SingleJob />
-        }
-        
-      ],
-    },
-  ];
+import AboutUs from "../pages/Menu/AboutUs";
+import Feauters from "../pages/Menu/Feauters";
 
- export const router = createBrowserRouter(routes); 
+export const routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path : "/dashboard",
+        element : <Dashboard />
+      },
+      {
+        path : "user/activate/:token",
+        element : <ActivateUser />
+      },
+      {
+        path : "/post-job",
+        element : <PostJob />
+      },
+      {
+        path : "/jobs",
+        element : <GetJobs />
+      },
+      {
+        path : "/jobs/:slug",
+        element : <JobsByCategory />
+      },
+      {
+        path : "/job/:id",
+        element : <SingleJob />
+      },
+      {
+        path: "/features",
+        element : <Feauters />
+      },
+      {
+        path : "/about-us",
+        element : <AboutUs />
+      }
+      
+    ],
+  },
+]) 

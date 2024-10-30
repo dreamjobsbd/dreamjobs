@@ -37,7 +37,7 @@
 
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./routes";
+import {routes} from "./routes/index"
 import { useAppDispatch, useAppSelector } from "./app/hook";
 import { getCurrentUser } from "./feauters/authSlice";
 
@@ -53,7 +53,7 @@ function App() {
     }
   }, [dispatch, isLoggedIn]);
 
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={routes} />;
 }
 
 export default App;

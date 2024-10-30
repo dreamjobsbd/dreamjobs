@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 py-20 px-4">
           {/* Brand details section */}
           <div className="text-center md:text-left">
-            <Link to={``} className="text-2xl font-bold">Flexywork</Link>
+            <Link to={``} className="text-2xl font-bold">Dreamjobs</Link>
             <p className="my-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia magni modi quo nostrum dolorum quae ullam rerum amet quis odit adipisicing elit.</p>
             <div className="space-x-2">
               <button className="bg-white text-black rounded px-4 py-2 font-medium">Google Play</button>
@@ -30,7 +30,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-semibold mb-4">About us</h3>
             <div className="space-y-2">
-              {["Flexywork Blogs", "Contact with us", "Flexywork demo", "Privacy condition", "Contact with us", "Flexywork demo"].map((item, index) => (
+              {["Dreamjobs Blogs", "Contact with us", "Dreamjobs demo", "Privacy condition", "Contact with us", "Dreamjobs demo"].map((item, index) => (
                 <Link key={index} to="/" className="block hover:underline">{item}</Link>
               ))}
             </div>
@@ -52,7 +52,7 @@ const Footer = () => {
             <div className="space-y-2 opacity-90">
               <p>70 Mugda, Madina bag, Dhaka 1214, Bangladesh</p>
               <p>Phone: 0889202456</p>
-              <p>Email: admin@unishop.com</p>
+              <p>Email: dremjobs@gmail.com</p>
             </div>
             <div className="mt-4 relative">
               <input type="text" className="w-full h-12 px-4 rounded-md outline-none text-black" />

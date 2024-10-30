@@ -25,14 +25,13 @@ const Categories = () => {
   return (
     <>
       <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6 text-center">Browse Jobs by Categories</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Browse Popular Categories</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {categories.length > 0 ? (
           categories.map((c:any, i) => (
             
             <Link to={`/jobs/${c.slug}`} key={i} className="category bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
               <div className="font-semibold text-lg mb-2">{c.name}</div>
-              <div className="text-sm text-gray-600">58 jobs</div>
             </Link>
           ))
         ) : (

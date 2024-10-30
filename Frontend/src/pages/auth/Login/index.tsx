@@ -29,10 +29,13 @@ const Login = () => {
       if(login.fulfilled.match(resultAction)){
         navigate("/")
         window.location.reload();
-      }else if (login.rejected.match(resultAction)) {
-        console.log(resultAction.payload);      }
+      }
+      
+      else if (login.rejected.match(resultAction)) {
+        console.log(resultAction.payload);
+      }
     } catch (error:any) {
-      console.log(error.message);
+      console.log(error);
       
     }
   

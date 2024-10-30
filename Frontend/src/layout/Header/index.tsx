@@ -26,7 +26,7 @@ const Header = () => {
                 to={`/`}
                 className="text-3xl font-bold transition duration-300"
               >
-                Flexywork
+                Dreamjobs
                 <span className="text-primary-color text-[2rem]">.</span>
               </Link>
             </div>
@@ -81,7 +81,7 @@ const Header = () => {
                 }
 
                 <Link
-                  to={`/about`}
+                  to={`/about-us`}
                   className="hover:text-primary-color transition duration-300 font-semibold"
                 >
                   About us
@@ -99,7 +99,7 @@ const Header = () => {
                {!user && <Link
                   to={`/register`}
                   onClick={toggleMenu}
-                  className="bg-[#0266FF] text-white py-2 px-4 rounded-sm transition duration-300 text-center"
+                  className="bg-primary-color text-white py-2 px-4 rounded-sm transition duration-300 text-center"
                 >
                   Register
                 </Link>}
