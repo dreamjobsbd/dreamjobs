@@ -12,14 +12,14 @@ import PostJob from "../pages/Jobs/PostJob"
 import GetJobs from "../pages/Jobs/GetJobs";
 import SingleJob from "../pages/Jobs/SingleJob";
 import JobsByCategory from "../pages/Jobs/JobsByCategory";
-
+import NotFound from "../pages/NotFound";
 import AboutUs from "../pages/Menu/AboutUs";
 import Feauters from "../pages/Menu/Feauters";
 
 export const routes = createBrowserRouter([
   {
-    path: "/",
     element: <Root />,
+    errorElement : <NotFound />,
     children: [
       {
         path: "/",
