@@ -5,7 +5,9 @@ import {
   GetJobPosts,
   GetSingleJobPostById,
   GetJobPostsByCategory,
-  deleteJobByID
+  deleteJobByID,
+  GetJobByDeadline,
+  GetJobsByCreatedDate
 } from "../controllers/jobController.js";
 
 //validation
@@ -19,6 +21,8 @@ const jobRoute = express.Router();
 jobRoute.post("/post-job",validateJobPost, RunValidation, IsLoggedIn, IsAdmin, CreateJobPost);
 jobRoute.get("/all-job", GetJobPosts);
 jobRoute.get("/:id", GetSingleJobPostById);
+jobRoute.get("/deadline/:deadline", GetJobByDeadline);
+jobRoute.get("/created/:date", GetJobsByCreatedDate);
 jobRoute.get("/category/:slug",GetJobPostsByCategory);
 jobRoute.delete("/delete-job/:id",IsLoggedIn, IsAdmin, deleteJobByID);
 

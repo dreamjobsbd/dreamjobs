@@ -135,6 +135,49 @@ export const GetJobPostsByCategory = async (req, res, next) => {
   }
 };
 
+
+export const GetJobByDeadline = async (req, res, next) => {
+  try {
+     const {deadline} = req.params;
+
+     const jobs = await JobPost.find({deadline});
+
+     return SuccessResponse(res, {
+      statusCode : 200,
+      message : `${deadline} jobs`,
+      payload : {jobs}
+     })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const GetJobsByCreatedDate = async (req, res, next) => {
+  try {
+    const date = req.params.date; // Format: YYYY-MM-DD
+    
+    // Create start and end of the day
+    const startDate = new Date(date);
+    const endDate = new Date(date);
+    endDate.setDate(endDate.getDate() + 1);
+
+    const jobs = await JobPost.find({
+      createdAt: {
+        $gte: startDate,
+        $lt: endDate
+      }
+    });
+
+    return SuccessResponse(res, {
+      statusCode: 200,
+      message: `Jobs post on ${date}`,
+      payload: { jobs }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteJobByID = async (req, res, next) => {
   try {
      const {id} = req.params;
@@ -151,6 +194,9 @@ export const deleteJobByID = async (req, res, next) => {
     next(error)
   }
 }
+
+
+
 
 
 
