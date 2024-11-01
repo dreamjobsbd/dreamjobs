@@ -8,13 +8,13 @@ import jsonwebtoken from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 //env variables
-import { jwtPrivatekey, clientUrl, jwtRefreshKey, jwtAccessKey } from "../hiddenEnv.js";
+import { jwtRefreshKey, jwtAccessKey } from "../hiddenEnv.js";
 
 //api response
 import { SuccessResponse, ErrorResponse } from "../helpers/apiResponse.js";
 
 //helper
-import ProcessEmail from "../helpers/processEmail.js";
+// import ProcessEmail from "../helpers/processEmail.js";
 import { SetAccessTokenCookie, SetRefreshTokenCookie } from "../helpers/cookies.js";
 
 
@@ -32,31 +32,34 @@ export const UserRegistration = async (req, res, next) => {
             })
         }
 
+        const userInfo = {fullName, email, phoneNumber, password};
+
+        await User.create(userInfo)
+
 
         //create a token with the user data
-        const userInfo = {fullName, email, phoneNumber, password};
-        const options = {expiresIn : "5m"}
-        const token = jsonwebtoken.sign(userInfo, jwtPrivatekey, options);
+
+        // const options = {expiresIn : "5m"}
+        // const token = jsonwebtoken.sign(userInfo, jwtPrivatekey, options);
         
 
         //prepare an email
-        const emailData = {
-            fullName,email,
-            subject : "Activate Email From Flexywork",
-            html : ` <h2>Hello ${fullName}</h2>
-            <p>please click on the following link to activate your email</p>
-            <a href="${clientUrl}/user/activate/${token}" target="blank">
-            activate account</a>`
+        // const emailData = {
+        //     fullName,email,
+        //     subject : "Activate Email From Flexywork",
+        //     html : ` <h2>Hello ${fullName}</h2>
+        //     <p>please click on the following link to activate your email</p>
+        //     <a href="${clientUrl}/user/activate/${token}" target="blank">
+        //     activate account</a>`
 
-        }
+        // }
         
-        ProcessEmail(emailData);
+        // ProcessEmail(emailData);
 
 
         return SuccessResponse(res, {
             statusCode : 200,
-            message : `go to your ${email} and click on the given link to activate account`,
-            payload : { token }
+            message : `user registration complete`,
         })
     
     } catch (error) {
@@ -65,38 +68,38 @@ export const UserRegistration = async (req, res, next) => {
 }
 
 
-export const ActivateUser = async (req, res, next) => {
-  try {
+// export const ActivateUser = async (req, res, next) => {
+//   try {
 
-     //get the token from request body
-     const token = req.body.token;
+//      //get the token from request body
+//      const token = req.body.token;
  
-     //verify token using the jwt private key
-     const decode = jsonwebtoken.verify(token, jwtPrivatekey);
+//      //verify token using the jwt private key
+//      const decode = jsonwebtoken.verify(token, jwtPrivatekey);
  
-     //if the token is invalid or expired throw and error
-     if (!decode) throw httpError(404, "unable to verify user");
+//      //if the token is invalid or expired throw and error
+//      if (!decode) throw httpError(404, "unable to verify user");
  
-     //create a new user document in the database using the decoded user information
-     await User.create(decode);
+//      //create a new user document in the database using the decoded user information
+//      await User.create(decode);
  
-     //send a success response
-     return SuccessResponse(res, {
-       message: "user registration successful",
-     });
+//      //send a success response
+//      return SuccessResponse(res, {
+//        message: "user registration successful",
+//      });
     
-  } catch (error) {
-      //handle specific token related error
-      if (error.name === "TokenExpiredError") {
-        throw httpError(401, "Token has expired");
-      } else if (error.name === "JsonWebTokenError") {
-        throw httpError(401, "Invalid Token");
-      } else {
-        //pass other error to next middlewares
-        next(error);
-      }
-  }
-};
+//   } catch (error) {
+//       //handle specific token related error
+//       if (error.name === "TokenExpiredError") {
+//         throw httpError(401, "Token has expired");
+//       } else if (error.name === "JsonWebTokenError") {
+//         throw httpError(401, "Invalid Token");
+//       } else {
+//         //pass other error to next middlewares
+//         next(error);
+//       }
+//   }
+// };
 
 
 export const UserLogin = async (req, res, next) => {

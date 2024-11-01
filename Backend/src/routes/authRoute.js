@@ -4,7 +4,7 @@ import express from "express";
 
 import {
   UserRegistration,
-  ActivateUser,
+  // ActivateUser,
   UserLogin,
   UserLogout,
   HandleRefreshToken,
@@ -18,7 +18,7 @@ import { IsLoggedIn, IsLoggedOut } from "../middlewares/authMiddleware.js";
 //validation
 import {
   validateUserRegistration,
-  validateActivateUser,
+  // validateActivateUser,
   validateUserLogin,
 } from "../validation/authValidation.js";
 import RunValidation from "../validation/index.js";
@@ -33,7 +33,7 @@ authRoute.post(
 );
 
 
-authRoute.post("/activate", validateActivateUser, RunValidation, ActivateUser);
+// authRoute.post("/activate", validateActivateUser, RunValidation, ActivateUser);
 
 authRoute.post("/login", validateUserLogin, IsLoggedOut, RunValidation, UserLogin);
 

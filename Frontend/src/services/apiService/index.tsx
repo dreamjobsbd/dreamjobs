@@ -5,7 +5,7 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { resetAuth } from '../../feauters/authSlice';
-
+//https://dreamjobs-backend.vercel.app
 export const api = axios.create({
   baseURL: "https://dreamjobs-backend.vercel.app",
   withCredentials: true, // This is crucial for cookie handling
