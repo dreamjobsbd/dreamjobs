@@ -59,7 +59,7 @@ const Login = () => {
           <div className="mb-3">
             <label htmlFor=""  className="block text-gray-700 font-medium mb-2">password: </label>
             <input
-              type="email"
+              type="password"
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
               autoComplete="none"
