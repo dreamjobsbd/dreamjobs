@@ -28,9 +28,11 @@ const Index = () => {
               <p className="text-gray-600">
                 In today's competitive market, a professional portfolio is essential. Secure your portfolio website with us, completely free of charge.
               </p>
-                <button onClick={()=>alert("this feauter will be come soon")} className="mt-4 px-4 py-2 bg-primary-color text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
+              <Link to={`/portfolio-website`}>
+                <button className="mt-4 px-4 py-2 bg-primary-color text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2">
                   Get Portfolio website for Free
                 </button>
+               </Link> 
             </div>
           </div>
           {/* Job Posting Section */}

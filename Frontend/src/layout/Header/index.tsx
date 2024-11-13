@@ -81,6 +81,13 @@ const Header = () => {
                 }
 
                 <Link
+                  to={`/portfolio-website`}
+                  className="hover:text-primary-color transition duration-300 font-semibold"
+                >
+                  Portfolio Website
+                </Link>
+
+                <Link
                   to={`/about-us`}
                   className="hover:text-primary-color transition duration-300 font-semibold"
                 >
@@ -96,7 +103,7 @@ const Header = () => {
                   {user ? `Dashboard` : `Login`}
                 </Link>
 
-               {!user && <Link
+                {!user && <Link
                   to={`/register`}
                   onClick={toggleMenu}
                   className="bg-primary-color text-white py-2 px-4 rounded-sm transition duration-300 text-center"

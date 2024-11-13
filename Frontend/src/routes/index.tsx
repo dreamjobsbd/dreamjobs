@@ -16,6 +16,9 @@ import NotFound from "../pages/NotFound";
 import AboutUs from "../pages/Menu/AboutUs";
 import Feauters from "../pages/Menu/Feauters";
 
+//layout
+import Portfolios from "../Portfolios";
+
 export const routes = createBrowserRouter([
   {
     element: <Root />,
@@ -60,6 +63,10 @@ export const routes = createBrowserRouter([
       {
         path: "/features",
         element : <Feauters />
+      },
+      {
+        path : "/portfolio-website",
+        element : <Portfolios />
       },
       {
         path : "/about-us",
