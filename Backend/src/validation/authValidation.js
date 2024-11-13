@@ -13,6 +13,11 @@ export const validateUserRegistration = [
     .isLength({ min: 3, max: 30 })
     .withMessage("name should be at least 3-30 characters"),
 
+  body("gender")
+     .trim()
+     .notEmpty()
+     .withMessage("gender is required"),
+
   body("email")
     .trim()
     .notEmpty()

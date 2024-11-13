@@ -20,7 +20,7 @@ import { SetAccessTokenCookie, SetRefreshTokenCookie } from "../helpers/cookies.
 
 export const UserRegistration = async (req, res, next) => {
     try {
-        const {fullName, email, phoneNumber, password} = req.body;
+        const {fullName, email, phoneNumber, password } = req.body;
         
         const existUser = await User.findOne({$or : [{email}, {phoneNumber}]});
         
