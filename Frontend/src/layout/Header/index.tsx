@@ -7,8 +7,9 @@ import { useAppSelector } from "../../app/hook";
 
 const Header = () => {
 
-  const { user } = useAppSelector((state) => state.auth);
+  const isUserLoggedIn = localStorage.getItem("isLoggedIn");
 
+  const {user} = useAppSelector((state)=>state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -97,13 +98,13 @@ const Header = () => {
               <div className="flex flex-col md:flex-row md:items-center mt-4 md:mt-0 space-y-2 md:space-y-0 md:space-x-2">
                 <Link
                   onClick={toggleMenu}
-                  to={user ? `/dashboard` : `/login`}
+                  to={isUserLoggedIn ? `/dashboard` : `/login`}
                   className="ring-1 ring-[#0266FF] text-black py-2 px-4 rounded-sm transition duration-300 text-center"
                 >
-                  {user ? `Dashboard` : `Login`}
+                  {isUserLoggedIn ? `Dashboard` : `Login`}
                 </Link>
 
-                {!user && <Link
+                {!isUserLoggedIn && <Link
                   to={`/register`}
                   onClick={toggleMenu}
                   className="bg-primary-color text-white py-2 px-4 rounded-sm transition duration-300 text-center"

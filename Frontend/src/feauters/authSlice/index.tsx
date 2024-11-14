@@ -23,7 +23,6 @@ export const login = createAsyncThunk("auth/login",
   async (credentials: loginCredentilas, { rejectWithValue }) => {
     try {
       const res = await api.post("/auth/login", credentials);
-      console.log(res);
       if (res.data.success){ 
         localStorage.setItem('isLoggedIn', 'true'); // Add this line
         return res.data;
@@ -36,26 +35,14 @@ export const login = createAsyncThunk("auth/login",
     }
 });
 
-//async thunk for logout
-// export const logout = createAsyncThunk("auth/logout",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       await api.post("/auth/logout");
-//       localStorage.removeItem('isLoggedIn'); // Add this line
-//     } catch (error: any) {
-//       rejectWithValue(error.respons?.data?.message);
-//     }
-//   }
-// )
-
 
 export const logout = createAsyncThunk("auth/logout",
   async (_, { rejectWithValue }) => {
     try {
       const res = await api.post("/auth/logout");
-      // Clear any stored tokens in localStorage if you're using it
-      localStorage.removeItem('isAuthenticated');
-      // Reset the API instance if you have any default headers
+      // Clear stored value in localStorage 
+      localStorage.removeItem('isLoggedIn');
+      // Reset the API instance
       api.defaults.headers.common['Authorization'] = '';
       return res.data;
     } catch (error: any) {
@@ -118,23 +105,16 @@ export const authSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.isLoading = true
         state.error = null
-        state.isLoggedIn = true; // Add this line
       })
       .addCase(login.fulfilled, (state) => {
           state.isLoading = false
           state.error = null
-
+          state.isLoggedIn = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string;
       })
-
-      //handle logout
-      // .addCase(logout.fulfilled, (state) => {
-      //   state.user = null;
-      //   state.isLoggedIn = false; // Add this line
-      // })
 
       .addCase(logout.pending, (state) => {
         state.isLoading = true;
@@ -144,6 +124,7 @@ export const authSlice = createSlice({
         state.user = null;
         state.isLoading = false;
         state.error = null;
+        state.isLoggedIn = false; // Add this line
         clearTimeout(refreshTokenTimeout);
       })
       .addCase(logout.rejected, (state, action) => {

@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from "../../../app/hook";
 import { logout, resetAuth  } from "../../../feauters/authSlice";
 import { useNavigate } from 'react-router-dom';
@@ -15,12 +15,23 @@ const Dashboard = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
+
   const [activeTab, setActiveTab] = useState('home');
+  
+  //checked 
+  const isUserLoggedIn = localStorage.getItem("isLoggedIn");
 
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  // }
+  useEffect(()=>{
+    if(!isUserLoggedIn){
+      navigate('/login');
+    }
+  },[isUserLoggedIn, navigate])
 
+
+  console.log(isUserLoggedIn);
+  
+
+  
   const handleLogout = async () => {
     try {
       await dispatch(logout()).unwrap();
