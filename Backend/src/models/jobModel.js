@@ -25,7 +25,10 @@ const jobPostSchema = new Schema(
       ref : "Category",
       required: true,
     },
-
+    applicationType : {
+      type : String,
+      required : true,
+    },
     applicationProcess: {
       type: String,
       trim: true,

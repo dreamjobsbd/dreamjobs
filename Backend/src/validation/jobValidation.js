@@ -23,7 +23,15 @@ export const validateJobPost = [
     body("salary")
        .trim()
        .notEmpty()
-       .withMessage("please provide a salary"),   
+       .withMessage("please provide a salary"),
+    
+    body("applicationType")
+       .trim()
+       .notEmpty()
+       .withMessage("Please provide application type")
+       .isIn(["Email", "Form", "Web Link"])
+       .withMessage("please provide Email, Form or Link to Application"),
+
 
     body("applicationProcess")
        .trim()

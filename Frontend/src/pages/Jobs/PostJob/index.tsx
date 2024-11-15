@@ -1,3 +1,4 @@
+
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { api } from "../../../services/apiService";
 
@@ -11,6 +12,7 @@ const PostJob: React.FC = () => {
     jobTitle: "",
     salary: "",
     category: "",
+    applicationType : "",
     applicationProcess: "",
     jobDescription: "",
     education: "",
@@ -34,6 +36,7 @@ const PostJob: React.FC = () => {
     { name: "jobTitle", label: "Job Title" },
     { name: "salary", label: "Salary" },
     { name : "category" , label : "Category"},
+    {name: "applicationType" , label: "Application Type"},
     { name: "applicationProcess", label: "Application Process"},
     { name: "jobDescription", label: "Job Description" },
     { name: "education", label: "Education" },
@@ -86,8 +89,6 @@ const PostJob: React.FC = () => {
               />
             </div>
           ))}
-
-          
           <button type="submit" className="mt-6 w-full bg-[#0266FF] text-white font-semibold py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-color">post job</button>
         </form>
       </div>

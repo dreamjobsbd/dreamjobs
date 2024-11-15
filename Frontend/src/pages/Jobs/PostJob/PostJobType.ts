@@ -6,6 +6,7 @@ export interface FormData {
   jobTitle: string;
   salary: string;
   category : string;
+  applicationType : string,
   applicationProcess: string;
   jobDescription: string;
   education: string;
